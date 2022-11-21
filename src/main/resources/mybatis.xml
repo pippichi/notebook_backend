@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--开启log4j的日志打印。默认就是开启的，可以不配置-->
+    <settings>
+        <!--当然，这个value除了是LOG4J还可以是SLF4J-->
+        <setting name="logImpl" value="LOG4J"/>
+    </settings>
+    <!--配置实体类的别名。工作中一般不用，因为一旦出问题就很难搞了-->
+    <typeAliases>
+        <!--给某个实体类配置别名，在Mapper文件中使用别名即可表示对应的实体类，简化代码的编写-->
+        <!-- <typeAlias type="com.bjsxt.pojo.Emp" alias="emp"></typeAlias> -->
+        <!-- 但是上面这种写法还是很麻烦，设想如果有一百个实体类，那么我们还是要配置一百次设置别名，因此我们换用下面这种：-->
+        <package name="com.qyf.notebook.entity"/> <!-- 默认该包下的所有类的类名即为别名，不区分大小写。这意味着mapper配置文件中的类似com.bjsxt.pojo.Emp的写法都可以直接写成Emp或者emp -->
+    </typeAliases>
+    <!--配置数据库环境，default的值为某个environment的id的值，表示当前使用的数据库环境-->
+    <environments default="mysql1">
+        <!--表示一个具体的数据库环境，可以配置多个-->
+        <environment id="mysql1">
+            <!--表明事务的管理仍然使用原生jdbc的方式-->
+            <transactionManager type="JDBC"/>
+            <!--配置数据库的连接参数，使用数据库连接池技术-->
+            <!--有POOLED、UNPOOLED和JNDI，具体介绍请看本章节的dataSource介绍-->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://127.0.0.1:3306/notebook?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=Asia/Shanghai"/>
+                <property name="username" value="root"/>
+                <property name="password" value="qyfnig107"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--配置Mapper文件的路径，用来告诉SqlSession mapper配置文件在哪，这样在最开始SqlSession就可以知道mapper配置文件有哪几个，就不需要在使用SqlSession做增删改查的时候再去找对应的mapper文件了-->
+    <mappers>
+        <package name="com.qyf.notebook.mapper"/>
+    </mappers>
+</configuration>

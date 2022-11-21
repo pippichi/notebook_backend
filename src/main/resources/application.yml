@@ -1,0 +1,38 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: notebook
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql://${properties.mysqlUrl}:3306/notebook?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+      username: root
+      password: qyfnig107
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      maxActive: 30
+      initial-size: 10
+      min-idle: 10
+      max-wait: 2000
+      max-open-prepared-statements: 20
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 30000
+      use-global-data-source-stat: true
+  flyway:
+    # 是否开启
+    enabled: true
+    # 禁止清空表操作
+    clean-disabled: true
+    # 初始化创建空表
+    baseline-on-migrate: true
+    # 设置基线时的版本
+    baseline-version: 1.0.0
+mybatis:
+  mapper-locations: classpath*:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.qyf.notebook.entity
+
+properties:
+  mysqlUrl: localhost
